@@ -14,6 +14,6 @@ if __name__ == '__main__':
     for i in range(15):
         scoutController.NewScout("scout{}".format(i), 12, random.randint(0, 4))
 
-    patrouilleGenerator.GeneratePatrouilles2(patrouilleController, scoutController, ["Beren", "Vossen", "Panthers"])
+    patrouilleGenerator.GeneratePatrouilles2(patrouilleController, scoutController, ["Beren", "Vossen", "Panters"])
     print(patrouilleController.printPatrouilles())
 
