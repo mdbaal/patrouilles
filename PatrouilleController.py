@@ -44,7 +44,7 @@ class PatrouilleController:
     def printPatrouilles(self):
         pat: Patrouille
         for pat in self._patrouilles.values():
-            print(pat.Naam + ": Insigne avg: {}".format(pat.CalcInsigneAvg()))
+            print(f"{pat.Naam} : Insigne avg: {pat.CalcInsigneAvg():.2f}")
             s: Scout
             for s in pat.Leden:
-                print(s.Naam + " Insigne: {}".format(s.GetInsigneLevel()) + "\n")
+                print(f"{s.Title} {s.Naam}  Insigne: {s.GetInsigneLevel()} \n")

@@ -1,5 +1,5 @@
 import time
-
+import json
 from ScoutController import ScoutController
 from PatrouilleController import PatrouilleController
 from PatrouilleGenerator import PatrouilleGenerator
@@ -11,9 +11,13 @@ patrouilleGenerator = PatrouilleGenerator()
 
 if __name__ == '__main__':
     random.seed(time.time())
-    for i in range(15):
-        scoutController.NewScout("scout{}".format(i), 12, random.randint(0, 4))
 
-    patrouilleGenerator.GeneratePatrouilles2(patrouilleController, scoutController, ["Beren", "Vossen", "Panters"])
+    with open('data/scouts.json') as scoutsJson:
+        scoutData = json.load(scoutsJson)
+
+    for s in scoutData["Scouts"]:
+        scoutController.NewScout(s["Naam"], s["Leeftijd"], s["Insignelevel"], title=s["Title"])
+
+    patrouilleGenerator.GeneratePatrouilles3(patrouilleController, scoutController, ["Beren", "Vossen", "Panters"])
     print(patrouilleController.printPatrouilles())
 

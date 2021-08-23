@@ -1,3 +1,4 @@
+import math
 from typing import List
 
 from Patrouille import Patrouille
@@ -67,8 +68,8 @@ class PatrouilleGenerator:
                     continue
 
                 # go through unassigned scouts
-                for i in range(len(_unassigned)-1, -1, -1):
-                    scout = _unassigned[i]
+                for i in _unassigned:
+                    scout = i
 
                     # if leden empty or scout is compatible
                     if len(pat.Leden) == 0 or pat.IsScoutCompatible(scout):
@@ -78,3 +79,34 @@ class PatrouilleGenerator:
                     else:
                         _unassigned.remove(scout)
                         break
+
+    def GeneratePatrouilles3(self, patrouilleControler: PatrouilleController, scoutController: ScoutController,
+                             patrouilleNamen: List):
+        _unassigned = scoutController.GetUnassignedScouts()
+        _patrouilleSize = math.ceil(len(_unassigned)/len(patrouilleNamen))
+
+        for patrouilleNaam in patrouilleNamen:
+            patrouilleControler.AddPatrouille(patrouilleNaam)
+
+        pat: Patrouille
+        while len(_unassigned) > 0:
+            for pat in patrouilleControler.GetPatrouilles():
+                # ignore full patrouilles
+                if len(pat.Leden) == _patrouilleSize:
+                    continue
+
+                scout: Scout
+                for scout in _unassigned:
+                    if scout.Title == "pl" and pat.PL is not None:
+                        break
+                    if scout.Title == "apl" and pat.APL is not None:
+                        break
+
+                    if len(pat.Leden) == 2 or pat.IsScoutCompatible(scout):
+                        pat.AddScout(scout)
+                        _unassigned.remove(scout)
+                        break
+
+
+        for pat in patrouilleControler.GetPatrouilles():
+            pat.SortOnTitle();

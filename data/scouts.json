@@ -1,0 +1,19 @@
+{"Scouts" : [
+  {"Naam": "Lars", "Leeftijd": 12,"Insignelevel": 2, "Title": "lid"},
+  {"Naam": "Thijmen", "Leeftijd": 12,"Insignelevel": 2, "Title": "lid"},
+  {"Naam": "Aaron", "Leeftijd": 12,"Insignelevel": 2, "Title": "lid"},
+  {"Naam": "Pelle", "Leeftijd": 12,"Insignelevel": 3, "Title": "lid"},
+  {"Naam": "Siebren", "Leeftijd": 12,"Insignelevel": 1, "Title": "lid"},
+  {"Naam": "Hugo", "Leeftijd": 12,"Insignelevel": 4, "Title": "lid"},
+  {"Naam": "Ihor", "Leeftijd": 12,"Insignelevel": 2, "Title": "lid"},
+  {"Naam": "Jens", "Leeftijd": 12,"Insignelevel": 3, "Title": "lid"},
+  {"Naam": "Roef", "Leeftijd": 12,"Insignelevel": 4, "Title": "apl"},
+  {"Naam": "Zen", "Leeftijd": 12,"Insignelevel": 2, "Title": "lid"},
+  {"Naam": "Yaril", "Leeftijd": 12,"Insignelevel": 2, "Title": "lid"},
+  {"Naam": "Leon", "Leeftijd": 12,"Insignelevel": 4, "Title": "apl"},
+  {"Naam": "Bram", "Leeftijd": 12,"Insignelevel": 4, "Title": "pl"},
+  {"Naam": "Tycho", "Leeftijd": 12,"Insignelevel": 4, "Title": "apl"},
+  {"Naam": "Lukas", "Leeftijd": 12,"Insignelevel": 4, "Title": "lid"},
+  {"Naam": "Bram F", "Leeftijd": 12,"Insignelevel": 4, "Title": "pl"},
+  {"Naam": "Stef", "Leeftijd": 12,"Insignelevel": 4, "Title": "pl"}
+]}
