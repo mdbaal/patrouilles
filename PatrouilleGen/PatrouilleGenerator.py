@@ -1,10 +1,10 @@
 import math
 from typing import List
 
-from Patrouille import Patrouille
-from Scout import Scout
-from PatrouilleController import PatrouilleController
-from ScoutController import ScoutController
+from .Patrouille import Patrouille
+from .Scout import Scout
+from .PatrouilleController import PatrouilleController
+from .ScoutController import ScoutController
 
 
 class PatrouilleGenerator:
@@ -106,7 +106,6 @@ class PatrouilleGenerator:
                         pat.AddScout(scout)
                         _unassigned.remove(scout)
                         break
-
 
         for pat in patrouilleControler.GetPatrouilles():
             pat.SortOnTitle();

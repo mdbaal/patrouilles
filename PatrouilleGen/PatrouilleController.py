@@ -1,5 +1,5 @@
-from Patrouille import Patrouille
-from Scout import Scout
+from .Patrouille import Patrouille
+from .Scout import Scout
 
 
 class PatrouilleController:

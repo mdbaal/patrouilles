@@ -2,7 +2,7 @@ import random
 import time
 from typing import Dict, List
 
-from Scout import Scout
+from .Scout import Scout
 
 
 class ScoutController:
@@ -23,7 +23,6 @@ class ScoutController:
         if len(self._scouts) > 0:
             for s in self._scouts.values():
                 s.SetRelation(scout, random.randint(-1, 1))
-
 
     def InsigneLevel(self, scout: Scout):
         return scout.GetInsigneLevel()

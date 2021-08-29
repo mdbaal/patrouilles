@@ -1,6 +1,6 @@
 from typing import Dict
 
-from Scout import Scout
+from .Scout import Scout
 
 
 class Patrouille:
