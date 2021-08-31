@@ -62,7 +62,7 @@ class App(Tk):
 
         # Unassigned scouts control
         self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout",command=partial(self.notify, "NewScout"))
-        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout")
+        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout",command=partial(self.notify, "DeleteScout"))
         self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout")
         self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout")
 

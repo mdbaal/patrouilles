@@ -27,13 +27,16 @@ class ScoutController:
     def InsigneLevel(self, scout: Scout):
         return scout.GetInsigneLevel()
 
-    def DeleteScout(self, scout):
+    def DeleteScout(self, scout_name: str):
+        scout: Scout = self._scouts.get(scout_name.split(' ')[0])
+
         for s in self._scouts.values():
             s.RemoveRelation(scout)
 
         if self._unassignedScouts.count(scout) > 0:
-            self._unassignedScouts.pop(scout)
-        self._scouts.pop(scout.Naam())
+            self._unassignedScouts.remove(scout)
+
+        self._scouts.pop(scout.Naam)
         del scout
 
     def EditScout(self, scout, prop, **change):

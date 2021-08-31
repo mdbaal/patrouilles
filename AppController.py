@@ -65,7 +65,8 @@ class AppController(object):
         switch = {
             "NewPatrouille": partial(self._app.new_patrouille_window, submit_command=self.create_patrouille),
             "DeletePatrouille": self.delete_patrouille,
-            "NewScout": partial(self._app.new_scout_window, submit_command=self.create_scout)
+            "NewScout": partial(self._app.new_scout_window, submit_command=self.create_scout),
+            "DeleteScout": self.delete_scout
         }
 
         switch.get(action)()
@@ -81,3 +82,8 @@ class AppController(object):
     def create_scout(self, data: Dict):
         self._app.unAssignedScouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
         self._scoutController.NewScout(data["Name"], data["Age"], data["Insigne"], data["Title"])
+
+    def delete_scout(self):
+        scout_name: str = self._app.unAssignedScouts.get_current_item()
+        self._app.unAssignedScouts.remove_item()
+        self._scoutController.DeleteScout(scout_name)
