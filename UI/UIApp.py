@@ -1,5 +1,7 @@
 from functools import partial
 from tkinter import *
+
+from .PopupWindows.InputWindow import InputWindow
 from .UIListFrame import UIListFrame
 
 
@@ -8,7 +10,7 @@ class App(Tk):
         super().__init__(master)
         self.title("Patrouille Generator")
         self.maxsize()
-
+        self.observer: object = None
         # Configure grid
         Grid.rowconfigure(self, 1, weight=1)
         Grid.rowconfigure(self, 1, weight=1)
@@ -40,7 +42,7 @@ class App(Tk):
         self.unassigned_scouts_frame.grid(row=2, column=2, padx=5, pady=5)
 
         # Patrouille control buttons
-        self.new_patrouille_btn = Button(self.patrouillecontrol_frame, text="New Patrouille")
+        self.new_patrouille_btn = Button(self.patrouillecontrol_frame, text="New Patrouille", command=partial(self.notify, "NewPatrouille"))
         self.delete_patrouille_btn = Button(self.patrouillecontrol_frame, text="Delete Patrouille")
         self.edit_patrouille_btn = Button(self.patrouillecontrol_frame, text="Edit Patrouille")
 
@@ -67,3 +69,13 @@ class App(Tk):
         self.delete_scout_btn.grid(row=0, column=1, padx=2, pady=2)
         self.assign_scout_btn.grid(row=0, column=2, padx=2, pady=2)
         self.edit_scout_btn.grid(row=0, column=4, padx=2, pady=2)
+
+    def attach(self,observer:object):
+        self.observer = observer
+
+    def notify(self,action:str):
+        if self.observer is not None:
+            self.observer.update(action)
+
+    def new_patrouille_window(self, submit_command=None):
+        InputWindow(self, "New Patrouille", submit_command=submit_command)

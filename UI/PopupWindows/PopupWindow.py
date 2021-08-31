@@ -4,8 +4,8 @@ from typing import Dict
 
 class PopupWindow(Toplevel):
 
-    def __init__(self, title=None, master=None, bg="lightgrey", submit_command=None):
-        super().__init__(self, master, bg=bg)
+    def __init__(self, master, title, bg="lightgrey", submit_command=None):
+        super().__init__(master, bg=bg)
 
         if title is not None:
             self.title(title)

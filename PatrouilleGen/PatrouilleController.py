@@ -1,3 +1,5 @@
+from typing import Dict
+
 from .Patrouille import Patrouille
 from .Scout import Scout
 
@@ -8,7 +10,7 @@ class PatrouilleController:
 
         }
 
-    def AddPatrouille(self, naam):
+    def AddPatrouille(self, naam: str):
         patrouille = Patrouille(naam)
         self._patrouilles.update({naam: patrouille})
 

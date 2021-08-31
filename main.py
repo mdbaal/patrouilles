@@ -24,7 +24,7 @@ if __name__ == '__main__':
     patrouilleGenerator.GeneratePatrouilles3(patrouilleController, scoutController, ["Beren", "Vossen", "Panters"])
     # print(patrouilleController.printPatrouilles())
     app = App()
-    appControl.Setup(scoutController, patrouilleController, patrouilleGenerator, app)
+    appControl.setup(scoutController, patrouilleController, patrouilleGenerator, app)
 
     app.mainloop()
 

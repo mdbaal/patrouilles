@@ -24,7 +24,7 @@ class AppController(object):
 
         return cls._instance
 
-    def Setup(self, scoutController: ScoutController, patrouilleController: PatrouilleController,
+    def setup(self, scoutController: ScoutController, patrouilleController: PatrouilleController,
               patrouilleGenerator: PatrouilleGenerator, app: App):
         self._scoutController = scoutController
         self._patrouilleController = patrouilleController
@@ -32,7 +32,7 @@ class AppController(object):
         self._app = app
         app.attach(self)
 
-    def LoadScoutsFromJson(self, path='data/scouts.json'):
+    def load_scouts_from_json(self, path='data/scouts.json'):
         if os.path.isfile(path) and os.path.getsize(path) > 0:
             with open(path) as scoutsJson:
                 scoutData = json.load(scoutsJson)
@@ -42,6 +42,16 @@ class AppController(object):
         else:
             return
 
-    def SaveScoutsToJson(self, path='data/scouts.json'):
+    def save_scouts_to_json(self, path='data/scouts.json'):
         pass
 
+    def update(self, action: str):
+        switch = {
+            "NewPatrouille": self._app.new_patrouille_window(submit_command=self.create_patrouille)
+        }
+
+        switch.get(action)
+
+    def create_patrouille(self, data: Dict):
+        self._patrouilleController.AddPatrouille(data["Name"])
+        self._app.patrouillesList.AddItem(data["Name"])
