@@ -21,6 +21,7 @@ class UIListFrame(Frame):
             self.listItems.insert(END, labelText)
 
     # Remove an item from the list via index
-    def RemoveItem(self, index):
+    def RemoveItem(self, item: str):
+        index = self.listItems.get(0, END).index(item)
         self.listItems.delete(index)
 

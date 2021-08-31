@@ -12,7 +12,7 @@ class ScoutController:
 
     _unassignedScouts: List = []
 
-    def NewScout(self, naam, leeftijd, insigneLevel, title="lid"):
+    def NewScout(self, naam, leeftijd, insigneLevel, title="lid") -> Scout:
         scout: Scout = Scout(naam, leeftijd, insigneLevel)
         self._scouts[naam] = scout
         scout.Title = title
