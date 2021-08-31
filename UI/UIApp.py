@@ -2,6 +2,7 @@ from functools import partial
 from tkinter import *
 
 from .PopupWindows.InputWindow import InputWindow
+from .PopupWindows.NewScoutWindow import NewScoutWindow
 from .UIListFrame import UIListFrame
 
 
@@ -43,7 +44,7 @@ class App(Tk):
 
         # Patrouille control buttons
         self.new_patrouille_btn = Button(self.patrouillecontrol_frame, text="New Patrouille", command=partial(self.notify, "NewPatrouille"))
-        self.delete_patrouille_btn = Button(self.patrouillecontrol_frame, text="Delete Patrouille")
+        self.delete_patrouille_btn = Button(self.patrouillecontrol_frame, text="Delete Patrouille", command=partial(self.notify, "DeletePatrouille"))
         self.edit_patrouille_btn = Button(self.patrouillecontrol_frame, text="Edit Patrouille")
 
         self.new_patrouille_btn.grid(row=0, column=0, padx=2, pady=2)
@@ -60,7 +61,7 @@ class App(Tk):
         self.edit_scout_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
 
         # Unassigned scouts control
-        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout")
+        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout",command=partial(self.notify, "NewScout"))
         self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout")
         self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout")
         self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout")
@@ -79,3 +80,6 @@ class App(Tk):
 
     def new_patrouille_window(self, submit_command=None):
         InputWindow(self, "New Patrouille", submit_command=submit_command)
+
+    def new_scout_window(self,submit_command=None):
+        NewScoutWindow(self, "New Scout", submit_command=submit_command)

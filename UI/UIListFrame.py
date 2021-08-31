@@ -16,12 +16,22 @@ class UIListFrame(Frame):
         self.listItems.grid(row=2, columnspan=2, sticky="NSEW")
 
     # Add an item to the list
-    def AddItem(self, labelText):
+    def add_item(self, labelText):
         if labelText is not None or "":
             self.listItems.insert(END, labelText)
 
     # Remove an item from the list via index
-    def RemoveItem(self, item: str):
-        index = self.listItems.get(0, END).index(item)
-        self.listItems.delete(index)
+    def remove_item(self):
+        self.listItems.delete(self.listItems.curselection())
 
+    def get_item(self, index):
+        return self.listItems.get(index)
+
+    def get_index_by_name(self, name):
+        for i, item in enumerate(self.listItems.get(0, END)):
+            if item == name:
+                return i
+        return 0
+
+    def get_current_item(self):
+        return self.get_item(self.listItems.curselection())
