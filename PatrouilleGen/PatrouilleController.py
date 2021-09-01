@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import List
 
 from .Patrouille import Patrouille
 from .Scout import Scout
@@ -14,9 +14,16 @@ class PatrouilleController:
         patrouille = Patrouille(naam)
         self._patrouilles.update({naam: patrouille})
 
-    def RemovePatrouille(self, naam):
-        patrouille = self._patrouilles.pop(naam)
+    def RemovePatrouille(self, naam) -> List[Scout]:
+        # Get the patrouille and scouts
+        patrouille: Patrouille = self._patrouilles.get(naam)
+        leden: List[Scout] = list(patrouille.Leden)
+        # Clear the patrouille
+        patrouille.clear()
+        self._patrouilles.pop(naam)
         del patrouille
+        # return list of scouts
+        return leden
 
     def ChangeNamePatrouille(self, oldNaam, newNaam):
         patrouille = self._patrouilles.get(oldNaam, None)

@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter.ttk import Combobox
+
 from .PopupWindow import PopupWindow
 
 
 class NewScoutWindow(PopupWindow):
     def __init__(self, master, title, bg="lightgrey", submit_command=None):
         super().__init__(master, bg=bg, title=title, submit_command=submit_command)
-        self.geometry("400x200")
+        self.geometry("400x250")
 
         Grid.columnconfigure(self, 0, weight=1
                              )

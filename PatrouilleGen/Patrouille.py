@@ -85,3 +85,5 @@ class Patrouille:
         else:
             return 2
 
+    def clear(self):
+        self._patrouilleLeden.clear()

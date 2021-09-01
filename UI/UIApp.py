@@ -1,6 +1,8 @@
 from functools import partial
 from tkinter import *
+from typing import List
 
+from .PopupWindows.DropdownInputWindow import DropdownInputWindow
 from .PopupWindows.InputWindow import InputWindow
 from .PopupWindows.NewScoutWindow import NewScoutWindow
 from .UIListFrame import UIListFrame
@@ -20,7 +22,7 @@ class App(Tk):
         Grid.columnconfigure(self, 2, weight=1)
 
         # Create all frames
-        self.patrouillesList = UIListFrame(master=self, title="Patrouilles")
+        self.patrouillesList = UIListFrame(master=self, title="Patrouilles", select_command=partial(self.notify, "SelectPatrouille"))
         self.patrouilleScouts = UIListFrame(master=self, title="Patrouille Leden")
         self.unAssignedScouts = UIListFrame(master=self, title="Geen Patrouille")
 
@@ -61,9 +63,9 @@ class App(Tk):
         self.edit_scout_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
 
         # Unassigned scouts control
-        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout",command=partial(self.notify, "NewScout"))
-        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout",command=partial(self.notify, "DeleteScout"))
-        self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout")
+        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "NewScout"))
+        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "DeleteScout"))
+        self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout", command=partial(self.notify, "AssignScout"))
         self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout")
 
         self.new_scout_btn.grid(row=0, column=0, padx=2, pady=2)
@@ -71,10 +73,12 @@ class App(Tk):
         self.assign_scout_btn.grid(row=0, column=2, padx=2, pady=2)
         self.edit_scout_btn.grid(row=0, column=4, padx=2, pady=2)
 
-    def attach(self,observer:object):
+    # attach observer object
+    def attach(self, observer: object):
         self.observer = observer
 
-    def notify(self,action:str):
+    # notify the observer object
+    def notify(self, action: str):
         if self.observer is not None:
             self.observer.update(action)
 
@@ -83,3 +87,15 @@ class App(Tk):
 
     def new_scout_window(self,submit_command=None):
         NewScoutWindow(self, "New Scout", submit_command=submit_command)
+
+    def assign_scout_window(self, submit_command=None):
+        DropdownInputWindow(self, "Assign scout to patrouille", self.patrouillesList.get_all_items(), submit_command=submit_command)
+
+    def select_patrouille(self, patrouille_leden: List):
+        self.patrouilleScouts.delete(0, END)
+
+        if len(patrouille_leden) == 0:
+            return
+
+        for scout in patrouille_leden:
+            self.patrouilleScouts.add_item(scout.Naam)

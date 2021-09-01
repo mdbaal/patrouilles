@@ -57,8 +57,14 @@ class ScoutController:
     def GetScouts(self):
         return self._scouts
 
+    def GetScout(self, scout_name: str):
+        return self._scouts.get(scout_name.split(' ')[0])
+
     def GetUnassignedScouts(self):
         return self._unassignedScouts
+
+    def add_to_unassigned(self, scout: Scout):
+        self._unassignedScouts.append(scout)
 
     def RemoveFromUnassigned(self, scout: Scout):
         self._unassignedScouts.remove(scout)
