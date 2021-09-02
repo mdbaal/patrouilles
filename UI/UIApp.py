@@ -47,11 +47,11 @@ class App(Tk):
         # Patrouille control buttons
         self.new_patrouille_btn = Button(self.patrouillecontrol_frame, text="New Patrouille", command=partial(self.notify, "NewPatrouille"))
         self.delete_patrouille_btn = Button(self.patrouillecontrol_frame, text="Delete Patrouille", command=partial(self.notify, "DeletePatrouille"))
-        self.edit_patrouille_btn = Button(self.patrouillecontrol_frame, text="Edit Patrouille")
+        self.rename_patrouille_btn = Button(self.patrouillecontrol_frame, text="Rename Patrouille", command=partial(self.notify, "RenamePatrouille"))
 
         self.new_patrouille_btn.grid(row=0, column=0, padx=2, pady=2)
         self.delete_patrouille_btn.grid(row=0, column=1, padx=2, pady=2)
-        self.edit_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
+        self.rename_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
 
         # Scout control in patrouille
         self.add_scout_btn = Button(self.patrouilleleden_frame, text="New Scout")
@@ -84,6 +84,9 @@ class App(Tk):
 
     def new_patrouille_window(self, submit_command=None):
         InputWindow(self, "New Patrouille", submit_command=submit_command)
+
+    def rename_patrouille_window(self, submit_command=None):
+        InputWindow(self, "Rename Patrouille", submit_command=submit_command)
 
     def new_scout_window(self, submit_command=None):
         NewScoutWindow(self, "New Scout", submit_command=submit_command)

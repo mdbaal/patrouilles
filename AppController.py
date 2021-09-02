@@ -64,6 +64,7 @@ class AppController(object):
         switch = {
             "NewPatrouille": partial(self._app.new_patrouille_window, submit_command=self.create_patrouille),
             "DeletePatrouille": self.delete_patrouille,
+            "RenamePatrouille": partial(self._app.rename_patrouille_window, submit_command=self.rename_patrouille),
             "new_scout": partial(self._app.new_scout_window, submit_command=self.create_scout),
             "delete_scout": self.delete_scout,
             "AssignScout": partial(self._app.assign_scout_window,submit_command=self.assign_scout),
@@ -75,6 +76,12 @@ class AppController(object):
 
     def create_patrouille(self, data: Dict):
         self._patrouilleController.add_patrouille(data["Name"])
+        self._app.patrouilles_list.add_item(data["Name"])
+
+    def rename_patrouille(self, data: Dict):
+        old_patrouille = self._app.patrouilles_list.get_current_item_name()
+        self._patrouilleController.rename_patrouille(old_patrouille, data["Name"])
+        self._app.patrouilles_list.remove_item()
         self._app.patrouilles_list.add_item(data["Name"])
 
     def delete_patrouille(self):

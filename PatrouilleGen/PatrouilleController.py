@@ -25,11 +25,11 @@ class PatrouilleController:
         # return list of scouts
         return leden
 
-    def change_name_patrouille(self, old_name, new_name):
-        patrouille = self._patrouilles.get(old_name, None)
+    def rename_patrouille(self, old_name, new_name):
+        patrouille: Patrouille = self._patrouilles.get(old_name, None)
         if patrouille is not None:
             self.add_patrouille(new_name)
-            self._patrouilles[new_name] = patrouille
+            self._patrouilles[new_name] = patrouille.__copy__()
             self.remove_patrouille(old_name)
 
     def get_patrouilles(self):
@@ -53,7 +53,7 @@ class PatrouilleController:
     def printPatrouilles(self):
         pat: Patrouille
         for pat in self._patrouilles.values():
-            print(f"{pat.naam} : Insigne avg: {pat.calc_insigne_avg():.2f}")
+            print(f"{pat.name} : Insigne avg: {pat.calc_insigne_avg():.2f}")
             s: Scout
             for s in pat.leden:
                 print(f"{s.title} {s.name}  Insigne: {s.get_insigne()} \n")

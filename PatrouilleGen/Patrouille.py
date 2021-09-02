@@ -11,10 +11,21 @@ class Patrouille:
         }
         self._patrouille_count = 0
 
-        self._insigne_Avg = 0
+        self._insigne_avg = 0
 
         self._pl = None
         self._apl = None
+
+    def __copy__(self):
+        copy = Patrouille(self.name)
+        for scout in self._patrouille_leden.values():
+            copy.add_scout(scout)
+
+        copy._pl = self._pl
+        copy._apl = self._apl
+        copy._insigne_avg = self._insigne_avg
+        copy._patrouille_count = self._patrouille_count
+        return copy
 
     def add_scout(self, scout):
         if scout in self._patrouille_leden.values():
@@ -45,7 +56,7 @@ class Patrouille:
         return True
 
     @property
-    def naam(self):
+    def name(self):
         return self._patrouille_name
 
     @property
@@ -65,8 +76,8 @@ class Patrouille:
         s: Scout
         for s in self._patrouille_leden.values():
             avg += s.get_insigne()
-        self._insigne_Avg = avg / self._patrouille_count
-        return self._insigne_Avg
+        self._insigne_avg = avg / self._patrouille_count
+        return self._insigne_avg
 
     def sort_on_title(self):
         sortedValues: Dict = sorted(self._patrouille_leden.values(), key=self._title_filter)
