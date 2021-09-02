@@ -1,59 +1,59 @@
 class Scout:
 
-    def __init__(self, naam, leeftijd, insigneLevel, title="lid"):
-        self._naam = naam
-        self._leeftijd = leeftijd
-        # insignes level 0 = pionieren 1 = hakken & stoken etc..
-        self._insigneLevel = insigneLevel
+    def __init__(self, name, age, insigne, title="lid"):
+        self._name = name
+        self._age = age
+        # insignes level 0 = pionieren, 1 = hakken & stoken, etc..
+        self._insigne = insigne
 
-        self._scoutRelations = {
+        self._scout_relations = {
 
         }
 
         self._title = title
 
     @property
-    def Naam(self):
-        return self._naam
+    def name(self):
+        return self._name
 
-    def ChangeNaam(self, naam):
-        self._naam = naam
-
-    @property
-    def Leeftijd(self):
-        return self._leeftijd
-
-    def ChangeLeeftijd(self, leeftijd):
-        self._leeftijd = leeftijd
+    def change_name(self, name):
+        self._name = name
 
     @property
-    def Title(self):
+    def age(self):
+        return self._age
+
+    def change_age(self, age):
+        self._age = age
+
+    @property
+    def title(self):
         return self._title
 
-    @Title.setter
-    def Title(self, title):
+    @title.setter
+    def title(self, title):
         self._title = title
 
-    def GetInsigneLevel(self):
-        return self._insigneLevel
+    def get_insigne(self):
+        return self._insigne
 
-    def SetInsigne(self, level):
-        self._insigneLevel = level
+    def set_insigne(self, level):
+        self._insigne = level
 
-    def SetRelation(self, scout, level):
-        self._scoutRelations[scout] = level
-        if not scout.HasRelation(self):
-            scout.SetRelation(self, level)
+    def set_relation(self, scout, level):
+        self._scout_relations[scout] = level
+        if not scout.has_relation(self):
+            scout.set_relation(self, level)
 
-    def HasRelation(self, scout):
-        return scout in self._scoutRelations
+    def has_relation(self, scout):
+        return scout in self._scout_relations
 
-    def GetRelation(self, scout):
-        if scout in self._scoutRelations:
-            return self._scoutRelations[scout]
+    def get_relation(self, scout):
+        if scout in self._scout_relations:
+            return self._scout_relations[scout]
         else:
             return -1
 
-    def RemoveRelation(self, scout):
-        if scout in self._scoutRelations.values():
-            self._scoutRelations.pop(scout)
+    def remove_relation(self, scout):
+        if scout in self._scout_relations.values():
+            self._scout_relations.pop(scout)

@@ -4,86 +4,86 @@ from .Scout import Scout
 
 
 class Patrouille:
-    def __init__(self, patrouilleNaam):
-        self._patrouilleNaam = patrouilleNaam
-        self._patrouilleLeden: Dict[str, Scout] = {
+    def __init__(self, patrouille_name):
+        self._patrouille_name = patrouille_name
+        self._patrouille_leden: Dict[str, Scout] = {
 
         }
-        self._patrouilleCount = 0
+        self._patrouille_count = 0
 
-        self._insigneAvg = 0
+        self._insigne_Avg = 0
 
         self._pl = None
         self._apl = None
 
-    def AddScout(self, scout):
-        if scout in self._patrouilleLeden.values():
-            if scout.Title == "pl":
+    def add_scout(self, scout):
+        if scout in self._patrouille_leden.values():
+            if scout.title == "pl":
                 self._pl = scout
-        elif scout.Title == "apl":
+        elif scout.title == "apl":
             self._apl = scout
 
-        self._patrouilleLeden.update({scout.Naam: scout})
-        self._patrouilleCount += 1
-        self.CalcInsigneAvg()
+        self._patrouille_leden.update({scout.name: scout})
+        self._patrouille_count += 1
+        self.calc_insigne_avg()
 
-    def RemoveScout(self, scout):
-        if scout in self._patrouilleLeden.values():
-            if scout.Title == "pl":
+    def remove_scout(self, scout):
+        if scout in self._patrouille_leden.values():
+            if scout.title == "pl":
                 self._pl = None
-            elif scout.Title == "apl":
+            elif scout.title == "apl":
                 self._apl = None
-            elif scout.Title == "lid":
-                self._patrouilleLeden.pop(scout.Naam)
-        self.CalcInsigneAvg()
+            elif scout.title == "lid":
+                self._patrouille_leden.pop(scout.name)
+        self.calc_insigne_avg()
 
-    def IsScoutCompatible(self, scout: Scout):
+    def is_scout_compatible(self, scout: Scout):
         s: Scout
-        for s in self._patrouilleLeden.values():
-            if s.GetRelation(scout) == -1:
+        for s in self._patrouille_leden.values():
+            if s.get_relation(scout) == -1:
                 return True
         return True
 
     @property
-    def Naam(self):
-        return self._patrouilleNaam
+    def naam(self):
+        return self._patrouille_name
 
     @property
-    def Leden(self):
-        return self._patrouilleLeden.values()
+    def leden(self):
+        return self._patrouille_leden.values()
 
     @property
-    def PL(self):
+    def pl(self):
         return self._pl
 
     @property
-    def APL(self):
+    def apl(self):
         return self._apl
 
-    def CalcInsigneAvg(self):
+    def calc_insigne_avg(self):
         avg: int = 0
         s: Scout
-        for s in self._patrouilleLeden.values():
-            avg += s.GetInsigneLevel()
-        self._insigneAvg = avg / self._patrouilleCount
-        return self._insigneAvg
+        for s in self._patrouille_leden.values():
+            avg += s.get_insigne()
+        self._insigne_Avg = avg / self._patrouille_count
+        return self._insigne_Avg
 
-    def SortOnTitle(self):
-        sortedValues: Dict = sorted(self._patrouilleLeden.values(), key=self.ScoutTitle)
+    def sort_on_title(self):
+        sortedValues: Dict = sorted(self._patrouille_leden.values(), key=self._title_filter)
         sortedDict: Dict[str, Scout] = {}
         scout: Scout
         for scout in sortedValues:
-            sortedDict[scout.Naam] = scout
+            sortedDict[scout.name] = scout
 
-        self._patrouilleLeden = sortedDict
+        self._patrouille_leden = sortedDict
 
-    def ScoutTitle(self, scout: Scout):
-        if scout.Title == 'pl':
+    def _title_filter(self, scout: Scout):
+        if scout.title == 'pl':
             return 0
-        elif scout.Title == 'apl':
+        elif scout.title == 'apl':
             return 1
         else:
             return 2
 
     def clear(self):
-        self._patrouilleLeden.clear()
+        self._patrouille_leden.clear()

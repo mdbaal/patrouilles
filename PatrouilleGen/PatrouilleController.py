@@ -10,50 +10,50 @@ class PatrouilleController:
 
         }
 
-    def AddPatrouille(self, naam: str):
-        patrouille = Patrouille(naam)
-        self._patrouilles.update({naam: patrouille})
+    def add_patrouille(self, name: str):
+        patrouille = Patrouille(name)
+        self._patrouilles.update({name: patrouille})
 
-    def RemovePatrouille(self, naam) -> List[Scout]:
+    def remove_patrouille(self, name) -> List[Scout]:
         # Get the patrouille and scouts
-        patrouille: Patrouille = self._patrouilles.get(naam)
-        leden: List[Scout] = list(patrouille.Leden)
+        patrouille: Patrouille = self._patrouilles.get(name)
+        leden: List[Scout] = list(patrouille.leden)
         # Clear the patrouille
         patrouille.clear()
-        self._patrouilles.pop(naam)
+        self._patrouilles.pop(name)
         del patrouille
         # return list of scouts
         return leden
 
-    def ChangeNamePatrouille(self, oldNaam, newNaam):
-        patrouille = self._patrouilles.get(oldNaam, None)
+    def change_name_patrouille(self, old_name, new_name):
+        patrouille = self._patrouilles.get(old_name, None)
         if patrouille is not None:
-            self.AddPatrouille(newNaam)
-            self._patrouilles[newNaam] = patrouille
-            self.RemovePatrouille(oldNaam)
+            self.add_patrouille(new_name)
+            self._patrouilles[new_name] = patrouille
+            self.remove_patrouille(old_name)
 
-    def GetPatrouilles(self):
+    def get_patrouilles(self):
         return self._patrouilles.values()
 
-    def GetPatrouille(self, naam) -> Patrouille:
-        return self._patrouilles[naam]
+    def get_patrouille(self, name) -> Patrouille:
+        return self._patrouilles[name]
 
-    def AddScoutToPatrouille(self, naam, scout: Scout):
-        self._patrouilles[naam].AddScout(scout)
+    def add_scout_to_patrouille(self, name, scout: Scout):
+        self._patrouilles[name].add_scout(scout)
 
-    def RemoveScoutFromPatrouille(self, naam, scout: Scout):
-        self._patrouilles[naam].RemoveScout(scout)
+    def remove_scout_from_patrouille(self, name, scout: Scout):
+        self._patrouilles[name].remove_scout(scout)
 
-    def TransferScoutToPatrouille(self, naam, scout: Scout):
-        self.RemoveScoutFromPatrouille(naam, scout)
-        self.AddScoutToPatrouille(naam, scout)
+    def transfer_scout_to_patrouille(self, name, scout: Scout):
+        self.remove_scout_from_patrouille(name, scout)
+        self.add_scout_to_patrouille(name, scout)
 
 
     # temp methods
     def printPatrouilles(self):
         pat: Patrouille
         for pat in self._patrouilles.values():
-            print(f"{pat.Naam} : Insigne avg: {pat.CalcInsigneAvg():.2f}")
+            print(f"{pat.naam} : Insigne avg: {pat.calc_insigne_avg():.2f}")
             s: Scout
-            for s in pat.Leden:
-                print(f"{s.Title} {s.Naam}  Insigne: {s.GetInsigneLevel()} \n")
+            for s in pat.leden:
+                print(f"{s.title} {s.name}  Insigne: {s.get_insigne()} \n")

@@ -12,16 +12,16 @@ class DropdownInputWindow(PopupWindow):
         Grid.rowconfigure(self, 2, weight=1)
         Grid.columnconfigure(self, 0, weight=1)
 
-        self.entryPatrouille: Combobox = Combobox(self)
-        self.entryPatrouille['values'] = options
-        self.entryPatrouille.grid(row=0, columnspan=2, sticky="EW", padx=20, pady=10)
-        self.entryPatrouille.focus()
+        self.entry_patrouille: Combobox = Combobox(self)
+        self.entry_patrouille['values'] = options
+        self.entry_patrouille.grid(row=0, columnspan=2, sticky="EW", padx=20, pady=10)
+        self.entry_patrouille.focus()
 
         self.button = Button(self, text="Submit", command=self.submit)
         self.button.grid(row=1, columnspan=2, sticky="EW", padx=20, pady=10)
 
     def submit(self):
-        self._input["option"] = self.entryPatrouille.get()
+        self._input["option"] = self.entry_patrouille.get()
         super().submit()
 
 

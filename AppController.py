@@ -53,7 +53,7 @@ class AppController(object):
         pass
 
     def sort_by_title(self, scout):
-        title = scout["Title"]
+        title = scout["title"]
 
         if title == "pl":
             return 0
@@ -66,8 +66,8 @@ class AppController(object):
         switch = {
             "NewPatrouille": partial(self._app.new_patrouille_window, submit_command=self.create_patrouille),
             "DeletePatrouille": self.delete_patrouille,
-            "NewScout": partial(self._app.new_scout_window, submit_command=self.create_scout),
-            "DeleteScout": self.delete_scout,
+            "new_scout": partial(self._app.new_scout_window, submit_command=self.create_scout),
+            "delete_scout": self.delete_scout,
             "AssignScout": partial(self._app.assign_scout_window,submit_command=self.assign_scout),
             "SelectPatrouille": self.select_patrouille
         }
@@ -75,39 +75,39 @@ class AppController(object):
         switch.get(action)()
 
     def create_patrouille(self, data: Dict):
-        self._patrouilleController.AddPatrouille(data["Name"])
-        self._app.patrouillesList.add_item(data["Name"])
+        self._patrouilleController.add_patrouille(data["Name"])
+        self._app.patrouilles_list.add_item(data["Name"])
 
     def delete_patrouille(self):
         # Get patrouille after it is destroyed
-        patleden = self._patrouilleController.RemovePatrouille(self._app.patrouillesList.get_current_item_name())
-        self._app.patrouillesList.remove_item()
+        patleden = self._patrouilleController.remove_patrouille(self._app.patrouilles_list.get_current_item_name())
+        self._app.patrouilles_list.remove_item()
         # If patrouille had scouts then add them back to unassigned
         for scout in patleden:
             self._scoutController.add_to_unassigned(scout)
-            self._app.unAssignedScouts.add_item(f"{scout.Naam} - {str.upper(scout.Title)}")
-            self._app.patrouilleScouts.delete(0, tkinter.constants.END)
+            self._app.unassigned_scouts.add_item(f"{scout.name} - {str.upper(scout.title)}")
+            self._app.patrouille_scouts.delete(0, tkinter.constants.END)
 
     # TODO add arg to check if scout is created unassigned or directly into patrouille
     def create_scout(self, data: Dict):
-        self._app.unAssignedScouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
-        self._scoutController.NewScout(data["Name"], data["Age"], data["Insigne"], data["Title"])
+        self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['title'])}")
+        self._scoutController.new_scout(data["Name"], data["Age"], data["Insigne"], data["title"])
 
     # TODO add arg to check if scout is in unassigned in patrouille
     def delete_scout(self):
-        scout_name: str = self._app.unAssignedScouts.get_current_item()
-        self._app.unAssignedScouts.remove_item()
-        self._scoutController.DeleteScout(scout_name)
+        scout_name: str = self._app.unassigned_scouts.get_current_item()
+        self._app.unassigned_scouts.remove_item()
+        self._scoutController.delete_scout(scout_name)
 
     def assign_scout(self, data: Dict):
-        scout_name = self._app.unAssignedScouts.get_current_item_name()
-        self._app.unAssignedScouts.remove_item()
-        scout: Scout = self._scoutController.GetScout(scout_name)
-        self._patrouilleController.AddScoutToPatrouille(data["option"], scout)
+        scout_name = self._app.unassigned_scouts.get_current_item_name()
+        self._app.unassigned_scouts.remove_item()
+        scout: Scout = self._scoutController.get_scout(scout_name)
+        self._patrouilleController.add_scout_to_patrouille(data["option"], scout)
 
     def select_patrouille(self):
-        patrouille_naam = self._app.patrouillesList.get_current_item_name()
+        patrouille_naam = self._app.patrouilles_list.get_current_item_name()
         if patrouille_naam is None:
             return
-        patrouille = self._patrouilleController.GetPatrouille(patrouille_naam)
-        self._app.select_patrouille(patrouille.Leden)
+        patrouille = self._patrouilleController.get_patrouille(patrouille_naam)
+        self._app.select_patrouille(patrouille.leden)

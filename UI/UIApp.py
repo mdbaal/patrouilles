@@ -22,21 +22,21 @@ class App(Tk):
         Grid.columnconfigure(self, 2, weight=1)
 
         # Create all frames
-        self.patrouillesList = UIListFrame(master=self, title="Patrouilles", select_command=partial(self.notify, "SelectPatrouille"))
-        self.patrouilleScouts = UIListFrame(master=self, title="Patrouille Leden")
-        self.unAssignedScouts = UIListFrame(master=self, title="Geen Patrouille")
+        self.patrouilles_list = UIListFrame(master=self, title="Patrouilles", select_command=partial(self.notify, "SelectPatrouille"))
+        self.patrouille_scouts = UIListFrame(master=self, title="Patrouille leden")
+        self.unassigned_scouts = UIListFrame(master=self, title="Geen Patrouille")
 
-        self.patrouillesList.grid(row=1, column=0, sticky="NSEW", padx=10)
+        self.patrouilles_list.grid(row=1, column=0, sticky="NSEW", padx=10)
 
-        self.patrouilleScouts.grid(row=1, column=1, sticky="NSEW", padx=10)
+        self.patrouille_scouts.grid(row=1, column=1, sticky="NSEW", padx=10)
 
-        self.unAssignedScouts.grid(row=1, column=2, sticky="NSEW", padx=10)
+        self.unassigned_scouts.grid(row=1, column=2, sticky="NSEW", padx=10)
 
         ## Row 2 column 0 Patrouille control Buttons
         self.patrouillecontrol_frame = Frame(self)
         self.patrouillecontrol_frame.grid(row=2, column=0, padx=5, pady=5)
 
-        ## Row 2 column 1 Patrouille Leden control Buttons
+        ## Row 2 column 1 Patrouille leden control Buttons
         self.patrouilleleden_frame = Frame(self)
         self.patrouilleleden_frame.grid(row=2, column=1, padx=5, pady=5)
 
@@ -63,8 +63,8 @@ class App(Tk):
         self.edit_scout_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
 
         # Unassigned scouts control
-        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "NewScout"))
-        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "DeleteScout"))
+        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "new_scout"))
+        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "delete_scout"))
         self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout", command=partial(self.notify, "AssignScout"))
         self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout")
 
@@ -85,17 +85,17 @@ class App(Tk):
     def new_patrouille_window(self, submit_command=None):
         InputWindow(self, "New Patrouille", submit_command=submit_command)
 
-    def new_scout_window(self,submit_command=None):
+    def new_scout_window(self, submit_command=None):
         NewScoutWindow(self, "New Scout", submit_command=submit_command)
 
     def assign_scout_window(self, submit_command=None):
-        DropdownInputWindow(self, "Assign scout to patrouille", self.patrouillesList.get_all_items(), submit_command=submit_command)
+        DropdownInputWindow(self, "Assign scout to patrouille", self.patrouilles_list.get_all_items(), submit_command=submit_command)
 
     def select_patrouille(self, patrouille_leden: List):
-        self.patrouilleScouts.delete(0, END)
+        self.patrouille_scouts.delete(0, END)
 
         if len(patrouille_leden) == 0:
             return
 
         for scout in patrouille_leden:
-            self.patrouilleScouts.add_item(scout.Naam)
+            self.patrouille_scouts.add_item(scout.name)
