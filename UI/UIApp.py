@@ -55,7 +55,7 @@ class App(Tk):
 
         # Scout control in patrouille
         self.add_scout_btn = Button(self.patrouilleleden_frame, text="New Scout")
-        self.delete_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Delete Scout")
+        self.delete_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Remove Scout",command=partial(self.notify,"UnAssignScout"))
         self.edit_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Edit Scout")
 
         self.add_scout_btn.grid(row=0, column=0, padx=2, pady=2)

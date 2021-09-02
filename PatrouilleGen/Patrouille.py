@@ -33,9 +33,9 @@ class Patrouille:
                 self._pl = None
             elif scout.title == "apl":
                 self._apl = None
-            elif scout.title == "lid":
-                self._patrouille_leden.pop(scout.name)
-        self.calc_insigne_avg()
+
+            self._patrouille_leden.pop(scout.name)
+            self.calc_insigne_avg()
 
     def is_scout_compatible(self, scout: Scout):
         s: Scout

@@ -25,6 +25,7 @@ class UIListFrame(Frame):
         if labelText is not None or "":
             self.listItems.insert(END, labelText)
 
+    # TODO return text of deleted item
     # Remove an item from the list via index
     def remove_item(self):
         self.listItems.delete(self.get_current_item())

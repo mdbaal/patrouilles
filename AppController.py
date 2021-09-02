@@ -15,9 +15,7 @@ class AppController(object):
     _scoutController: ScoutController = None
     _patrouilleController: PatrouilleController = None
     _patrouilleGenerator: PatrouilleGenerator = None
-
-    def __init__(self):
-        self._app: App = None
+    _app: App = None
 
     def __new__(cls):
         if cls._instance is None:
@@ -53,7 +51,7 @@ class AppController(object):
         pass
 
     def sort_by_title(self, scout):
-        title = scout["title"]
+        title = scout["Title"]
 
         if title == "pl":
             return 0
@@ -69,6 +67,7 @@ class AppController(object):
             "new_scout": partial(self._app.new_scout_window, submit_command=self.create_scout),
             "delete_scout": self.delete_scout,
             "AssignScout": partial(self._app.assign_scout_window,submit_command=self.assign_scout),
+            "UnAssignScout": self.unassign_scout,
             "SelectPatrouille": self.select_patrouille
         }
 
@@ -90,8 +89,8 @@ class AppController(object):
 
     # TODO add arg to check if scout is created unassigned or directly into patrouille
     def create_scout(self, data: Dict):
-        self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['title'])}")
-        self._scoutController.new_scout(data["Name"], data["Age"], data["Insigne"], data["title"])
+        self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
+        self._scoutController.new_scout(data["Name"], data["Age"], data["Insigne"], data["Title"])
 
     # TODO add arg to check if scout is in unassigned in patrouille
     def delete_scout(self):
@@ -104,6 +103,21 @@ class AppController(object):
         self._app.unassigned_scouts.remove_item()
         scout: Scout = self._scoutController.get_scout(scout_name)
         self._patrouilleController.add_scout_to_patrouille(data["option"], scout)
+
+    # TODO use return of remove_item to get scout_name
+    def unassign_scout(self):
+        # Get scout name and patrouille name
+        scout_name = self._app.patrouille_scouts.get_current_item_name()
+        patrouille_name = self._app.patrouilles_list.get_current_item_name()
+
+        # Get scout, remove it from patrouille and text list
+        scout: Scout = self._scoutController.get_scout(scout_name)
+        self._patrouilleController.remove_scout_from_patrouille(patrouille_name, scout)
+        self._app.patrouille_scouts.remove_item()
+
+        # Add scout to unassigned list and text list
+        self._scoutController.add_to_unassigned(scout)
+        self._app.unassigned_scouts.add_item(f"{scout.name} - {scout.title}")
 
     def select_patrouille(self):
         patrouille_naam = self._app.patrouilles_list.get_current_item_name()
