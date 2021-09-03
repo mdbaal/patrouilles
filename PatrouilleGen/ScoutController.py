@@ -10,9 +10,10 @@ class ScoutController:
 
     _unassigned_scouts: List = []
 
-    def new_scout(self, name, age, insigne, relations: Dict, title="lid") -> Scout:
-        scout: Scout = Scout(name, age, insigne, relations=relations, title=title)
-        self._scouts[name] = scout
+    # TODO set input argument to data: Dict
+    def new_scout(self, data: Dict) -> Scout:
+        scout: Scout = Scout(data)
+        self._scouts[data["Name"]] = scout
         self._unassigned_scouts.append(scout)
         self._unassigned_scouts.sort(key=self._insigne_filter)
         return scout
@@ -47,6 +48,10 @@ class ScoutController:
 
     def get_scouts(self):
         return self._scouts.values()
+
+    def get_scouts_dict(self):
+        print(self._scouts.values())
+        return self._scouts
 
     def get_scout(self, scout_name: str):
         name = self.clean_name(scout_name)

@@ -30,7 +30,7 @@ class AppController(object):
         self._patrouilleGenerator = patrouilleGenerator
         self._app = app
         app.attach(self)
-
+        app.protocol("WM_DELETE_WINDOW", self.on_exit)
         self.load_scouts_from_json()
 
     def load_scouts_from_json(self, path='data/scouts.json'):
@@ -49,14 +49,29 @@ class AppController(object):
             raise IOError()
 
     def save_scouts_to_json(self, path='data/scouts.json'):
-        pass
+        all_scouts: Dict = self._scoutController.get_scouts_dict()
+        scouts_json: str = '{"Scouts" : ['
+        for scout in all_scouts.values():
+            scouts_json += json.dumps(scout, default=Scout.to_dict, indent=4)
+            scouts_json += ','
+
+        scouts_json = scouts_json[:-1]
+
+        scouts_json += ']}'
+
+        with open(path, "w") as scoutsJson:
+            scoutsJson.write(scouts_json)
+
+    def on_exit(self):
+        self.save_scouts_to_json()
+        self._app.quit()
 
     def sort_by_title(self, scout):
         title = scout["Title"]
 
         if title == "pl":
             return 0
-        elif title== "apl":
+        elif title == "apl":
             return 1
         else:
             return 2
@@ -96,10 +111,13 @@ class AppController(object):
             self._app.unassigned_scouts.add_item(f"{scout.name} - {str.upper(scout.title)}")
             self._app.patrouille_scouts.delete(0, tkinter.constants.END)
 
-    # TODO add arg to check if scout is created unassigned or directly into patrouille
     def create_scout(self, data: Dict):
-        self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
-        self._scoutController.new_scout(data["Name"], data["Age"], data["Insigne"], title=data["Title"], relations=data["Relations"])
+        scout = self._scoutController.new_scout(data)
+
+        if data["Patrouille"] is not None:
+            self.assign_scout({"Name": data["Name"], "Option": data["Patrouille"]})
+        else:
+            self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
 
     def edit_scout(self, data: Dict):
         self._scoutController.edit_scout(data)
@@ -118,12 +136,19 @@ class AppController(object):
         self._scoutController.delete_scout(scout_name)
 
     def assign_scout(self, data: Dict):
-        scout_name = self._app.unassigned_scouts.get_current_item_name()
-        self._app.unassigned_scouts.remove_item()
-        scout: Scout = self._scoutController.get_scout(scout_name)
-        self._patrouilleController.add_scout_to_patrouille(data["option"], scout)
+        if "Name" in data:
+            scout_name = data["Name"]
+        else:
+            scout_name = self._app.unassigned_scouts.get_current_item_name()
 
-    # TODO use return of remove_item to get scout_name
+        self._app.unassigned_scouts.remove_item_by_name(scout_name)
+        scout: Scout = self._scoutController.get_scout(scout_name)
+
+        if self._patrouilleController.get_patrouille(data["Option"]) is None:
+            self.create_patrouille({"Name": data["Option"]})
+        self._patrouilleController.add_scout_to_patrouille(data["Option"], scout)
+        scout.set_patrouille(data["Option"])
+
     def unassign_scout(self):
         # Get scout name and patrouille name
         scout_name = self._app.patrouille_scouts.get_current_item_name()
@@ -137,6 +162,8 @@ class AppController(object):
         # Add scout to unassigned list and text list
         self._scoutController.add_to_unassigned(scout)
         self._app.unassigned_scouts.add_item(f"{scout.name} - {scout.title}")
+
+        scout.set_patrouille(None)
 
     def select_patrouille(self):
         patrouille_naam = self._app.patrouilles_list.get_current_item_name()

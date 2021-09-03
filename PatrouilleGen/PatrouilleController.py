@@ -36,7 +36,10 @@ class PatrouilleController:
         return self._patrouilles.values()
 
     def get_patrouille(self, name) -> Patrouille:
-        return self._patrouilles[name]
+        if name in self._patrouilles:
+            return self._patrouilles[name]
+        else:
+            return None
 
     def add_scout_to_patrouille(self, name, scout: Scout):
         self._patrouilles[name].add_scout(scout)

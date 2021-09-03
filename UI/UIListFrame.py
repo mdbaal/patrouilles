@@ -12,6 +12,7 @@ class UIListFrame(Frame):
             self._title = title
             self.title = Label(self, text=title)
             self.title.grid(row=0, columnspan=2, sticky="EW")
+            self.text = title
 
         self.listItems = Listbox(self, selectmode=SINGLE, borderwidth=3, selectbackground="grey")
         self.listItems.grid(row=2, columnspan=2, sticky="NSEW")
@@ -25,16 +26,22 @@ class UIListFrame(Frame):
         if labelText is not None or "":
             self.listItems.insert(END, labelText)
 
-    # TODO return text of deleted item
     # Remove an item from the list via index
     def remove_item(self):
         self.listItems.delete(self.get_current_item())
 
+    def remove_item_by_name(self, item):
+        print(f"Remove {item}")
+        self.listItems.delete(self.get_index_by_name(item))
+
     def get_item(self, index):
-        if self.listItems.size() > 0:
+        if self.listItems.size() > 0 or index is not None:
             return self.listItems.get(index)
-        else:
+
             return None
+
+    def get_item_by_name(self, name):
+        return self.get_item(self.get_index_by_name(name))
 
     def get_index_by_name(self, name):
         for i, item in enumerate(self.listItems.get(0, END)):

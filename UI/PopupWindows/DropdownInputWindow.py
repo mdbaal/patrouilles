@@ -22,7 +22,7 @@ class DropdownInputWindow(PopupWindow):
         self.button.grid(row=1, columnspan=2, sticky="EW", padx=20, pady=10)
 
     def submit(self):
-        self._input["option"] = self.entry_patrouille.get()
+        self._input["Option"] = self.entry_patrouille.get()
         super().submit()
 
 

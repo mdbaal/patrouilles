@@ -3,15 +3,17 @@ from typing import Dict
 
 class Scout:
 
-    def __init__(self, name, age, insigne, relations, title="lid"):
-        self._name = name
-        self._age = age
+    def __init__(self, data: Dict):
+        self._name = data["Name"]
+        self._age = data["Age"]
         # insignes level 0 = pionieren, 1 = hakken & stoken, etc..
-        self._insigne = insigne
+        self._insigne = data["Insigne"]
 
-        self._scout_relations: Dict[str, int] = relations
+        self._patrouille = data["Patrouille"]
 
-        self._title = title
+        self._scout_relations: Dict[str, int] = data["Relations"]
+
+        self._title = data["Title"]
 
     @property
     def name(self):
@@ -65,3 +67,22 @@ class Scout:
 
     def __repr__(self):
         return self.name
+
+    def to_dict(self):
+        if isinstance(self, Scout):
+            dict = {
+                "Name": self._name,
+                "Age": self._age,
+                "Insigne": self._insigne,
+                "Title": self._title,
+                "Patrouille": self._patrouille,
+                "Relations": self._scout_relations
+            }
+
+            return dict
+        else:
+            type_name = self.__class__.__name__
+            raise TypeError("Unexpected type {0}".format(type_name))
+
+    def set_patrouille(self, patrouille):
+        self._patrouille = patrouille
