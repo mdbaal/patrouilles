@@ -1,5 +1,3 @@
-import random
-import time
 from typing import Dict, List
 
 from .Scout import Scout
@@ -12,17 +10,12 @@ class ScoutController:
 
     _unassigned_scouts: List = []
 
-    def new_scout(self, name, age, insigne, title="lid") -> Scout:
-        scout: Scout = Scout(name, age, insigne)
+    def new_scout(self, name, age, insigne, relations: Dict, title="lid") -> Scout:
+        scout: Scout = Scout(name, age, insigne, relations=relations, title=title)
         self._scouts[name] = scout
-        scout.title = title
         self._unassigned_scouts.append(scout)
         self._unassigned_scouts.sort(key=self._insigne_filter)
-
-        random.seed(time.time())
-        if len(self._scouts) > 0:
-            for s in self._scouts.values():
-                s.set_relation(scout, random.randint(-1, 1))
+        return scout
 
     def _insigne_filter(self, scout: Scout):
         return scout.get_insigne()
@@ -39,27 +32,25 @@ class ScoutController:
         self._scouts.pop(scout.name)
         del scout
 
-    # TODO redo after setting scout relations works
-    def EditScout(self, scout, prop, **change):
-        # check property to change, then activate function with parameters
-        switcher = {
-            "name": scout.change_name(change["name"]),
-            "leeftijd": scout.change_age(change["leeftijd"]),
-            "insigne": scout.set_insigne(change["insigne"], change["boolean"]),
-            "relation": scout.set_relation(change["scout"], change["level"]),
-            "removeRel": scout.remove_relation(change["scout"]),
-        }
+    def edit_scout(self, data: Dict):
+        scout: Scout = data["Scout"]
 
-        action = switcher.get(prop, None)
+        scout.change_name(data["Name"])
+        scout.change_age(data["Age"])
+        scout.set_insigne(data["Insigne"])
+        scout.title = data["Title"]
 
-        if action is not None:
-            action()
+        for relation, level in data["Relations"].items():
+            scout.set_relation(relation, level)
+            other_scout: Scout = self.get_scout(relation)
+            other_scout.set_relation(scout.name, level)
 
     def get_scouts(self):
-        return self._scouts
+        return self._scouts.values()
 
     def get_scout(self, scout_name: str):
-        return self._scouts.get(scout_name.split(' ')[0])
+        name = self.clean_name(scout_name)
+        return self._scouts.get(name)
 
     def get_unassigned_scouts(self):
         return self._unassigned_scouts
@@ -69,3 +60,23 @@ class ScoutController:
 
     def remove_from_unassigned(self, scout: Scout):
         self._unassigned_scouts.remove(scout)
+
+    def set_relations(self):
+        scout: Scout
+        other_scout: Scout
+
+        for scout in self._scouts.values():
+            for other_scout in self._scouts.values():
+                if other_scout is not scout:
+                    if scout.has_relation(other_scout.name) is False:
+                        scout.set_relation(other_scout.name, 0)
+
+    def clean_name(self, scout_name: str):
+        if " - PL" in scout_name:
+            return scout_name.replace(" - PL", "")
+        if " - APL" in scout_name:
+            return scout_name.replace(" - APL", "")
+        if " - LID" in scout_name:
+            return scout_name.replace(" - LID", "")
+
+        return scout_name

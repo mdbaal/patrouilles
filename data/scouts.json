@@ -1,19 +1,104 @@
 {"Scouts" : [
-  {"Name": "Lars", "Age": 12, "Insigne": 2, "Title": "lid"},
-  {"Name": "Thijmen", "Age": 12, "Insigne": 2, "Title": "lid"},
-  {"Name": "Aaron", "Age": 12, "Insigne": 2, "Title": "lid"},
-  {"Name": "Pelle", "Age": 12, "Insigne": 3, "Title": "lid"},
-  {"Name": "Siebren", "Age": 12, "Insigne": 1, "Title": "lid"},
-  {"Name": "Hugo", "Age": 12, "Insigne": 4, "Title": "lid"},
-  {"Name": "Ihor", "Age": 12, "Insigne": 2, "Title": "lid"},
-  {"Name": "Jens", "Age": 12, "Insigne": 3, "Title": "lid"},
-  {"Name": "Roef", "Age": 12, "Insigne": 4, "Title": "apl"},
-  {"Name": "Zen", "Age": 12, "Insigne": 2, "Title": "lid"},
-  {"Name": "Yaril", "Age": 12, "Insigne": 2, "Title": "lid"},
-  {"Name": "Leon", "Age": 12, "Insigne": 4, "Title": "apl"},
-  {"Name": "Bram", "Age": 12, "Insigne": 4, "Title": "pl"},
-  {"Name": "Tycho", "Age": 12, "Insigne": 4, "Title": "apl"},
-  {"Name": "Lukas", "Age": 12, "Insigne": 4, "Title": "lid"},
-  {"Name": "BramF", "Age": 12, "Insigne": 4, "Title": "pl"},
-  {"Name": "Stef", "Age": 12, "Insigne": 4, "Title": "pl"}
+  {"Name": "Lars", "Age": 15, "Insigne": 2, "Title": "lid",
+    "Relations": {
+      "Aaron":0,
+      "Stef": -1,
+      "Tycho": 1
+  }},
+  {"Name": "Thijmen", "Age": 12, "Insigne": 2, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Aaron", "Age": 12, "Insigne": 2, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Pelle", "Age": 12, "Insigne": 3, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Siebren", "Age": 12, "Insigne": 1, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Hugo", "Age": 12, "Insigne": 4, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Ihor", "Age": 12, "Insigne": 2, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Jens", "Age": 11, "Insigne": 3, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Roef", "Age": 12, "Insigne": 4, "Title": "apl",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Zen", "Age": 12, "Insigne": 2, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Yaril", "Age": 12, "Insigne": 2, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Leon", "Age": 12, "Insigne": 4, "Title": "apl",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Bram", "Age": 12, "Insigne": 4, "Title": "pl",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Tycho", "Age": 12, "Insigne": 4, "Title": "apl",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Lukas", "Age": 12, "Insigne": 4, "Title": "lid",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Bram F", "Age": 12, "Insigne": 4, "Title": "pl",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }},
+  {"Name": "Stef", "Age": 12, "Insigne": 4, "Title": "pl",
+    "Relations": {
+      "Aaron": 0,
+      "Stef":  -1,
+      "Tycho":  1
+  }}
 ]}

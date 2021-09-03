@@ -1,14 +1,15 @@
+from typing import Dict
+
+
 class Scout:
 
-    def __init__(self, name, age, insigne, title="lid"):
+    def __init__(self, name, age, insigne, relations, title="lid"):
         self._name = name
         self._age = age
         # insignes level 0 = pionieren, 1 = hakken & stoken, etc..
         self._insigne = insigne
 
-        self._scout_relations = {
-
-        }
+        self._scout_relations: Dict[str, int] = relations
 
         self._title = title
 
@@ -40,20 +41,27 @@ class Scout:
     def set_insigne(self, level):
         self._insigne = level
 
-    def set_relation(self, scout, level):
-        self._scout_relations[scout] = level
-        if not scout.has_relation(self):
-            scout.set_relation(self, level)
+    def set_relation(self, other, level):
+        self._scout_relations[other] = level
 
-    def has_relation(self, scout):
-        return scout in self._scout_relations
+    def set_relations(self, relations: Dict):
+        self._scout_relations = dict(relations)
 
-    def get_relation(self, scout):
-        if scout in self._scout_relations:
-            return self._scout_relations[scout]
+    def remove_relation(self, other):
+        if other in self._scout_relations.values():
+            self._scout_relations.pop(other)
+
+    def has_relation(self, other) -> bool:
+        return other in self._scout_relations
+
+    def get_relation(self, other):
+        if other in self._scout_relations:
+            return self._scout_relations[other]
         else:
-            return -1
+            return 0
 
-    def remove_relation(self, scout):
-        if scout in self._scout_relations.values():
-            self._scout_relations.pop(scout)
+    def get_relations(self):
+        return self._scout_relations
+
+    def __repr__(self):
+        return self.name

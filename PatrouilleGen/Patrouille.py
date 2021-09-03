@@ -98,3 +98,6 @@ class Patrouille:
 
     def clear(self):
         self._patrouille_leden.clear()
+
+    def get_scout(self, scout_name):
+        return self._patrouille_leden[scout_name]

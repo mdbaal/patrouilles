@@ -9,10 +9,10 @@ patrouilleGenerator = PatrouilleGenerator()
 appControl = AppController()
 
 if __name__ == '__main__':
-    # patrouilleGenerator.generate_patrouilles(patrouilleController, scoutController, ["Beren", "Vossen", "Panters"])
 
     app = App()
     appControl.setup(scoutController, patrouilleController, patrouilleGenerator, app)
 
     app.mainloop()
 
+    # TODO make static tools script with filters etc used in project

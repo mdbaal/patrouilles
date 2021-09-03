@@ -3,6 +3,7 @@ from tkinter import *
 from typing import List
 
 from .PopupWindows.DropdownInputWindow import DropdownInputWindow
+from .PopupWindows.EditScoutWindow import EditScoutWindow
 from .PopupWindows.InputWindow import InputWindow
 from .PopupWindows.NewScoutWindow import NewScoutWindow
 from .UIListFrame import UIListFrame
@@ -66,7 +67,7 @@ class App(Tk):
         self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "new_scout"))
         self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "delete_scout"))
         self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout", command=partial(self.notify, "AssignScout"))
-        self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout")
+        self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout", command=partial(self.notify,"edit_scout"))
 
         self.new_scout_btn.grid(row=0, column=0, padx=2, pady=2)
         self.delete_scout_btn.grid(row=0, column=1, padx=2, pady=2)
@@ -90,6 +91,9 @@ class App(Tk):
 
     def new_scout_window(self, submit_command=None):
         NewScoutWindow(self, "New Scout", submit_command=submit_command)
+
+    def edit_scout_window(self, scout, patrouille: List, submit_command=None):
+        EditScoutWindow(master=self, scout=scout, patrouille=patrouille, title="Edit Scout", submit_command=submit_command)
 
     def assign_scout_window(self, submit_command=None):
         DropdownInputWindow(self, "Assign scout to patrouille", self.patrouilles_list.get_all_items(), submit_command=submit_command)

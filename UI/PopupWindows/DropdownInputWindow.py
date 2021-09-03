@@ -14,6 +14,7 @@ class DropdownInputWindow(PopupWindow):
 
         self.entry_patrouille: Combobox = Combobox(self)
         self.entry_patrouille['values'] = options
+        self.entry_patrouille.set(options[0])
         self.entry_patrouille.grid(row=0, columnspan=2, sticky="EW", padx=20, pady=10)
         self.entry_patrouille.focus()
 

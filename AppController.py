@@ -19,7 +19,6 @@ class AppController(object):
 
     def __new__(cls):
         if cls._instance is None:
-            print('Creating the object')
             cls._instance = super(AppController, cls).__new__(cls)
 
         return cls._instance
@@ -44,6 +43,8 @@ class AppController(object):
             for scout in sortedData:
                 self.create_scout(scout)
 
+            self._scoutController.set_relations()
+
         except IOError:
             raise IOError()
 
@@ -66,13 +67,14 @@ class AppController(object):
             "DeletePatrouille": self.delete_patrouille,
             "RenamePatrouille": partial(self._app.rename_patrouille_window, submit_command=self.rename_patrouille),
             "new_scout": partial(self._app.new_scout_window, submit_command=self.create_scout),
+            "edit_scout": self.edit_scout_window_setup,
             "delete_scout": self.delete_scout,
-            "AssignScout": partial(self._app.assign_scout_window,submit_command=self.assign_scout),
+            "AssignScout": partial(self._app.assign_scout_window, submit_command=self.assign_scout),
             "UnAssignScout": self.unassign_scout,
             "SelectPatrouille": self.select_patrouille
         }
 
-        switch.get(action)()
+        switch.get(action, None)()
 
     def create_patrouille(self, data: Dict):
         self._patrouilleController.add_patrouille(data["Name"])
@@ -97,7 +99,17 @@ class AppController(object):
     # TODO add arg to check if scout is created unassigned or directly into patrouille
     def create_scout(self, data: Dict):
         self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
-        self._scoutController.new_scout(data["Name"], data["Age"], data["Insigne"], data["Title"])
+        self._scoutController.new_scout(data["Name"], data["Age"], data["Insigne"], title=data["Title"], relations=data["Relations"])
+
+    def edit_scout(self, data: Dict):
+        self._scoutController.edit_scout(data)
+
+    def edit_scout_window_setup(self):
+        scout: Scout = self._scoutController.get_scout(self._app.unassigned_scouts.get_current_item_name())
+        if scout is None:
+            return
+        all_scouts = list(self._scoutController.get_scouts())
+        self._app.edit_scout_window(scout, all_scouts, submit_command=self.edit_scout)
 
     # TODO add arg to check if scout is in unassigned in patrouille
     def delete_scout(self):
