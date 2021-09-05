@@ -31,7 +31,6 @@ class UIListFrame(Frame):
         self.listItems.delete(self.get_current_item())
 
     def remove_item_by_name(self, item):
-        print(f"Remove {item}")
         self.listItems.delete(self.get_index_by_name(item))
 
     def get_item(self, index):

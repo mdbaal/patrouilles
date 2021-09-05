@@ -50,7 +50,6 @@ class ScoutController:
         return self._scouts.values()
 
     def get_scouts_dict(self):
-        print(self._scouts.values())
         return self._scouts
 
     def get_scout(self, scout_name: str):
