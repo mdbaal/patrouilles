@@ -81,10 +81,11 @@ class AppController(object):
             "NewPatrouille": partial(self._app.new_patrouille_window, submit_command=self.create_patrouille),
             "DeletePatrouille": self.delete_patrouille,
             "RenamePatrouille": partial(self._app.rename_patrouille_window, submit_command=self.rename_patrouille),
-            "new_scout": partial(self._app.new_scout_window, submit_command=self.create_scout),
-            "edit_scout": self.edit_scout_window_setup,
-            "delete_scout": self.delete_scout,
+            "NewScout": partial(self._app.new_scout_window, submit_command=self.create_scout),
+            "EditScout": self.edit_scout_window_setup,
+            "DeleteScout": self.delete_scout,
             "AssignScout": partial(self._app.assign_scout_window, submit_command=self.assign_scout),
+            "TransferScout": partial(self._app.assign_scout_window, submit_command=self.transfer_scout),
             "UnAssignScout": self.unassign_scout,
             "SelectPatrouille": self.select_patrouille
         }
@@ -148,6 +149,14 @@ class AppController(object):
             self.create_patrouille({"Name": data["Option"]})
         self._patrouilleController.add_scout_to_patrouille(data["Option"], scout)
         scout.set_patrouille(data["Option"])
+
+    def transfer_scout(self, data: Dict):
+        scout_name = self._app.patrouille_scouts.get_current_item_name()
+        scout: Scout = self._scoutController.get_scout(scout_name)
+        old_patrouille = self._app.patrouilles_list.get_current_item_name()
+
+        self._patrouilleController.transfer_scout_to_patrouille(old_patrouille, data["Option"], scout)
+        self._app.patrouille_scouts.remove_item_by_name(scout_name)
 
     def unassign_scout(self):
         # Get scout name and patrouille name

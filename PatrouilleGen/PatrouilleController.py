@@ -47,16 +47,8 @@ class PatrouilleController:
     def remove_scout_from_patrouille(self, name, scout: Scout):
         self._patrouilles[name].remove_scout(scout)
 
-    def transfer_scout_to_patrouille(self, name, scout: Scout):
-        self.remove_scout_from_patrouille(name, scout)
-        self.add_scout_to_patrouille(name, scout)
+    def transfer_scout_to_patrouille(self, old_patrouille, new_patrouille, scout: Scout):
+        self.remove_scout_from_patrouille(old_patrouille, scout)
+        self.add_scout_to_patrouille(new_patrouille, scout)
+        scout.set_patrouille(new_patrouille)
 
-
-    # temp methods
-    def printPatrouilles(self):
-        pat: Patrouille
-        for pat in self._patrouilles.values():
-            print(f"{pat.name} : Insigne avg: {pat.calc_insigne_avg():.2f}")
-            s: Scout
-            for s in pat.leden:
-                print(f"{s.title} {s.name}  Insigne: {s.get_insigne()} \n")

@@ -55,19 +55,19 @@ class App(Tk):
         self.rename_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
 
         # Scout control in patrouille
-        self.add_scout_btn = Button(self.patrouilleleden_frame, text="New Scout")
-        self.delete_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Remove Scout",command=partial(self.notify,"UnAssignScout"))
-        self.edit_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Edit Scout")
+        self.add_scout_btn = Button(self.patrouilleleden_frame, text="New Scout", command=partial(self.notify, "NewScout"))
+        self.delete_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Remove Scout", command=partial(self.notify, "UnAssignScout"))
+        self.edit_scout_patrouille_btn = Button(self.patrouilleleden_frame, text="Transfer Scout", command=partial(self.notify, "TransferScout"))
 
         self.add_scout_btn.grid(row=0, column=0, padx=2, pady=2)
         self.delete_scout_patrouille_btn.grid(row=0, column=1, padx=2, pady=2)
         self.edit_scout_patrouille_btn.grid(row=0, column=2, padx=2, pady=2)
 
         # Unassigned scouts control
-        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "new_scout"))
-        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "delete_scout"))
+        self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "NewScout"))
+        self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "DeleteScout"))
         self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout", command=partial(self.notify, "AssignScout"))
-        self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout", command=partial(self.notify,"edit_scout"))
+        self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout", command=partial(self.notify,"EditScout"))
 
         self.new_scout_btn.grid(row=0, column=0, padx=2, pady=2)
         self.delete_scout_btn.grid(row=0, column=1, padx=2, pady=2)
