@@ -86,3 +86,7 @@ class Scout:
 
     def set_patrouille(self, patrouille):
         self._patrouille = patrouille
+
+    @property
+    def patrouille(self):
+        return self._patrouille

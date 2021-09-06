@@ -32,6 +32,7 @@ class AppController(object):
         app.attach(self)
         app.protocol("WM_DELETE_WINDOW", self.on_exit)
         self.load_scouts_from_json()
+        self.setup_scouts()
 
     def load_scouts_from_json(self, path='data/scouts.json'):
         try:
@@ -42,8 +43,6 @@ class AppController(object):
 
             for scout in sortedData:
                 self.create_scout(scout)
-
-            self._scoutController.set_relations()
 
         except IOError:
             raise IOError()
@@ -61,6 +60,14 @@ class AppController(object):
 
         with open(path, "w") as scoutsJson:
             scoutsJson.write(scouts_json)
+
+    def setup_scouts(self):
+        for scout in self._scoutController.get_scouts():
+
+            if scout.patrouille is not None:
+                self.assign_scout({"Name": scout.name, "Option": scout.patrouille})
+
+        self._scoutController.set_relations()
 
     def on_exit(self):
         self.save_scouts_to_json()
@@ -115,11 +122,7 @@ class AppController(object):
 
     def create_scout(self, data: Dict):
         scout = self._scoutController.new_scout(data)
-
-        if data["Patrouille"] is not None:
-            self.assign_scout({"Name": data["Name"], "Option": data["Patrouille"]})
-        else:
-            self._app.unassigned_scouts.add_item(f"{data['Name']} - {str.upper(data['Title'])}")
+        self._app.unassigned_scouts.add_item(f"{scout.name} - {str.upper(scout.title)}")
 
     def edit_scout(self, data: Dict):
         self._scoutController.edit_scout(data)

@@ -109,8 +109,6 @@ class App(Tk):
         if len(patrouille_leden) == 0:
             return
 
-
-
         for scout in patrouille_leden:
             self.patrouille_scouts.add_item(f"{scout.name} - {str.upper(scout.title)}")
 
