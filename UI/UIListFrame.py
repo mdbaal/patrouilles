@@ -2,17 +2,17 @@ from tkinter import *
 
 
 class UIListFrame(Frame):
-    def __init__(self, master=None, title=None,select_command=None):
+    def __init__(self, master=None, title=None, select_command=None):
         super().__init__(master, borderwidth=10, bg="lightgrey")
         # size rows and columns for full width and height
         Grid.rowconfigure(self, 2, weight=1)
         Grid.columnconfigure(self, 0, weight=1)
         # Add frame title
+        self.title_label: Label = None
+
         if title is not None or "":
-            self._title = title
-            self.title = Label(self, text=title)
-            self.title.grid(row=0, columnspan=2, sticky="EW")
-            self.text = title
+            self.title_label = Label(self, text=title)
+            self.title_label.grid(row=0, columnspan=2, sticky="EW")
 
         self.listItems = Listbox(self, selectmode=SINGLE, borderwidth=3, selectbackground="grey")
         self.listItems.grid(row=2, columnspan=2, sticky="NSEW")
@@ -20,6 +20,14 @@ class UIListFrame(Frame):
         self.select_command = select_command
         self.listItems.bind("<<ListboxSelect>>", self._select)
         self.listItems.bind("<FocusOut>", self._select)
+
+    # Edit title
+    def update_title(self, new_title):
+        if self.title_label is None:
+            self.title_label = Label(self)
+            self.title_label.grid(row=0, columnspan=2, sticky="EW")
+
+        self.title_label.config(text=new_title)
 
     # Add an item to the list
     def add_item(self, labelText):

@@ -36,6 +36,7 @@ class PatrouilleGenerator:
 
                     if len(patrouille.leden) == 2 or patrouille.is_scout_compatible(scout):
                         patrouille.add_scout(scout)
+                        scout.set_patrouille(patrouille.name)
                         _unassigned.remove(scout)
                         break
 

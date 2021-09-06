@@ -87,7 +87,8 @@ class AppController(object):
             "AssignScout": partial(self._app.assign_scout_window, submit_command=self.assign_scout),
             "TransferScout": partial(self._app.assign_scout_window, submit_command=self.transfer_scout),
             "UnAssignScout": self.unassign_scout,
-            "SelectPatrouille": self.select_patrouille
+            "SelectPatrouille": self.select_patrouille,
+            "GeneratePatrouilles": partial(self._app.generate_patrouille_window, submit_command=self.generate_patrouilles)
         }
 
         switch.get(action, None)()
@@ -131,6 +132,7 @@ class AppController(object):
         self._app.edit_scout_window(scout, all_scouts, submit_command=self.edit_scout)
 
     # TODO add arg to check if scout is in unassigned in patrouille
+    # TODO on delete scout clear all other relations
     def delete_scout(self):
         scout_name: str = self._app.unassigned_scouts.get_current_item()
         self._app.unassigned_scouts.remove_item()
@@ -180,3 +182,17 @@ class AppController(object):
             return
         patrouille = self._patrouilleController.get_patrouille(patrouille_naam)
         self._app.select_patrouille(patrouille.leden)
+        self._app.patrouille_scouts.update_title(f"Patrouille leden: {patrouille_naam}")
+
+    def generate_patrouilles(self, data: Dict):
+        # Add check for existing patrouilles, if so open window to ask for keep current or overwrite current
+
+        self._patrouilleGenerator.generate_patrouilles(self._patrouilleController, self._scoutController, data["Patrouilles"])
+
+        # Update patrouille and unassigned list
+        patrouille: Patrouille
+        for patrouille in self._patrouilleController.get_patrouilles():
+            self._app.patrouilles_list.add_item(patrouille.name)
+            for scout in patrouille.leden:
+                self._app.unassigned_scouts.remove_item_by_name(scout.name)
+

@@ -16,5 +16,4 @@ if __name__ == '__main__':
     app.mainloop()
 
     # TODO make static tools script with filters etc used in project
-    # TODO on delete scout clear all other relations
 

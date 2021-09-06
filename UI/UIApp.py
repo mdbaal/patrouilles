@@ -4,6 +4,7 @@ from typing import List
 
 from .PopupWindows.DropdownInputWindow import DropdownInputWindow
 from .PopupWindows.EditScoutWindow import EditScoutWindow
+from .PopupWindows.GeneratePatrouilleWindow import GeneratePatrouilleWindow
 from .PopupWindows.InputWindow import InputWindow
 from .PopupWindows.NewScoutWindow import NewScoutWindow
 from .UIListFrame import UIListFrame
@@ -67,12 +68,16 @@ class App(Tk):
         self.new_scout_btn = Button(self.unassigned_scouts_frame, text="New Scout", command=partial(self.notify, "NewScout"))
         self.delete_scout_btn = Button(self.unassigned_scouts_frame, text="Delete Scout", command=partial(self.notify, "DeleteScout"))
         self.assign_scout_btn = Button(self.unassigned_scouts_frame, text="Assign Scout", command=partial(self.notify, "AssignScout"))
-        self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout", command=partial(self.notify,"EditScout"))
+        self.edit_scout_btn = Button(self.unassigned_scouts_frame, text="Edit Scout", command=partial(self.notify, "EditScout"))
 
         self.new_scout_btn.grid(row=0, column=0, padx=2, pady=2)
         self.delete_scout_btn.grid(row=0, column=1, padx=2, pady=2)
         self.assign_scout_btn.grid(row=0, column=2, padx=2, pady=2)
         self.edit_scout_btn.grid(row=0, column=4, padx=2, pady=2)
+
+        # Row 3 Generator button
+        self.generate_patrouilles_btn = Button(self, text="Generate Patrouilles", command=partial(self.notify, "GeneratePatrouilles"))
+        self.generate_patrouilles_btn.grid(row=3, column=0, columnspan=4, padx=2, pady=2)
 
     # attach observer object
     def attach(self, observer: object):
@@ -104,5 +109,10 @@ class App(Tk):
         if len(patrouille_leden) == 0:
             return
 
+
+
         for scout in patrouille_leden:
-            self.patrouille_scouts.add_item(scout.name)
+            self.patrouille_scouts.add_item(f"{scout.name} - {str.upper(scout.title)}")
+
+    def generate_patrouille_window(self, submit_command=None):
+        GeneratePatrouilleWindow(self, title="Generate Patrouille", submit_command=submit_command)
