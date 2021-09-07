@@ -16,6 +16,7 @@ class GeneratePatrouilleWindow(PopupWindow):
 
         self.entry_patrouille = Entry(self)
         self.entry_patrouille.grid(row=0, sticky="EW", padx=10, pady=5)
+        self.entry_patrouille.focus()
         self.list_patrouilles = UIListFrame(master=self)
         self.list_patrouilles.grid(row=1, sticky="EW", padx=10, pady=5)
         self.entry_patrouille.bind('<Return>', self.add_to_list)

@@ -52,7 +52,7 @@ class Patrouille:
         s: Scout
         for s in self._patrouille_leden.values():
             if s.get_relation(scout) == -1:
-                return True
+                return False
         return True
 
     @property
@@ -97,7 +97,17 @@ class Patrouille:
             return 2
 
     def clear(self):
+        leden = list(self._patrouille_leden.values())
         self._patrouille_leden.clear()
+
+        return leden
 
     def get_scout(self, scout_name):
         return self._patrouille_leden[scout_name]
+
+    def __repr__(self):
+        text = f"Patrouille: {self.name} \n"
+        for scout in self.leden:
+            text += f"    {scout.name} - {scout.title} \n"
+
+        return text

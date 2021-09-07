@@ -22,7 +22,10 @@ class ScoutController:
         return scout.get_insigne()
 
     def delete_scout(self, scout_name: str):
-        scout: Scout = self._scouts.get(scout_name.split(' ')[0])
+        if scout_name not in self._scouts:
+            return
+
+        scout: Scout = self._scous[scout_name.split(' ')[0]]
 
         for s in self._scouts.values():
             s.remove_relation(scout)
